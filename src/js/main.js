@@ -7,16 +7,6 @@ const url = 'https://dev.adalab.es/api/disney?pageSize=15';
 
 let listCharacters = [];
 let listCharactersFav = [];
-const favoritesLS = JSON.parse(localStorage.getItem('favoristesList'));
-
-function local() {
-  if (favoritesLS) {
-    listCharacters = favoritesLS;
-    renderCharacter(listCharacters);
-  } else {
-    fetchCharacters();
-  }
-}
 
 //renderizar todos los personajes con bucle
 function renderAllCharacters(listCharacters) {
@@ -28,6 +18,12 @@ function renderAllCharacters(listCharacters) {
 function renderCharacter(oneCharacter) {
   return `<li id="${oneCharacter._id}" class="list_items js_li-characters"><img src="${oneCharacter.imageUrl}"><p> ${oneCharacter.name}</p></li>`;
 }
+const favoritesLS = JSON.parse(localStorage.getItem('favoritesList'));
+if (favoritesLS !== null) {
+  listCharactersFav = favoritesLS;
+  renderFavCharacterList();
+}
+
 //peticion a la API de los personajes
 function fetchCharacters() {
   fetch(url)
@@ -36,7 +32,9 @@ function fetchCharacters() {
       listCharacters = data.data;
       renderAllCharacters(listCharacters);
       clickEventFavoriteCharacter();
-      localStorage.setItem('favoritesList', JSON.stringify(listCharactersFav));
+    })
+    .catch((error) => {
+      console.error(error);
     });
 }
 
@@ -51,6 +49,7 @@ function renderFavCharacterList() {
     ulFavorites.innerHTML += renderCharacter(listFav);
     console.log(listFav);
   }
+  localStorage.setItem('favoritesList', JSON.stringify(listCharactersFav));
 }
 
 //click en el <li>
