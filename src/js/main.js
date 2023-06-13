@@ -4,22 +4,29 @@ const ulElement = document.querySelector('.js_list');
 const ulFavorites = document.querySelector('.js_fav-list');
 const searchInput = document.querySelector('.js_searchInput');
 const searchButton = document.querySelector('.js_searchBtn');
-const url = 'https://dev.adalab.es/api/disney?pageSize=15';
 const urlMoreCharacters = 'https://api.disneyapi.dev/character';
 
 let listCharacters = [];
 let listCharactersFav = [];
-let anotherCharacters = [];
 
 //renderizar todos los personajes con bucle
 function renderAllCharacters(listCharacters) {
+  ulElement.innerHTML = '';
   for (const character of listCharacters) {
     ulElement.innerHTML += renderCharacter(character);
   }
 }
 //renderizar personaje
 function renderCharacter(oneCharacter) {
-  return `<li id="${oneCharacter._id}" class="list_items js_li-characters"><img class="image" src="${oneCharacter.imageUrl}"><p> ${oneCharacter.name}</p></li>`;
+  const id = parseInt(oneCharacter._id);
+  //const index = listCharacters.findIndex((item) => item._id === id);
+  const indexFav = listCharactersFav.findIndex((item) => item._id === id);
+  console.log(indexFav);
+  if (indexFav !== -1) {
+    return `<li id="${oneCharacter._id}" class="list_items list_fav js_li-characters"><img class="image" src="${oneCharacter.imageUrl}"><p> ${oneCharacter.name}</p></li>`;
+  } else {
+    return `<li id="${oneCharacter._id}" class="list_items js_li-characters"><img class="image" src="${oneCharacter.imageUrl}"><p> ${oneCharacter.name}</p></li>`;
+  }
 }
 //renderizar lista guardada en el localStorage
 const favoritesLS = JSON.parse(localStorage.getItem('favoritesList'));
@@ -30,7 +37,7 @@ if (favoritesLS !== null) {
 
 //peticion a la API de los personajes
 function fetchCharacters() {
-  fetch(url)
+  fetch(urlMoreCharacters)
     .then((response) => response.json())
     .then((data) => {
       listCharacters = data.data;
@@ -77,14 +84,21 @@ function handleClick(event) {
     listCharactersFav.splice(indexCharacter, 1);
   }
   console.log(listCharactersFav);
+
   renderFavCharacterList();
 }
 
-function moreCharacters(event) {
+function searchCharacters(event) {
   event.preventDefault();
-  fetch(urlMoreCharacters)
-    .then((response) => response.json())
-    .then((moreData) => (anotherCharacters = moreData.data));
+  console.log('he clickado el buscador');
+  const inputValue = searchInput.value;
+  console.log(inputValue);
+  const filterCharacter = listCharacters.filter((data) =>
+    data.name.toLowerCase().includes(inputValue.toLowerCase())
+  );
+  console.log(filterCharacter);
+
+  renderAllCharacters(filterCharacter);
 }
 
-searchButton.addEventListener('click', moreCharacters);
+searchButton.addEventListener('click', searchCharacters);
