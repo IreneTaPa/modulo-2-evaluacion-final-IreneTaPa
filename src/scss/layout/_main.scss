@@ -1,65 +1,100 @@
+main {
+    background-image: url(../images/toy-story.jpg);
+    background-position: repeat-x;
+    
+    
+}
 .form {
     background-color: white;
     height: 70px;
-    width: 500px;
+    width: 700px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    transform: translateY(-50%)translateX(50%);
+    transform: translateY(-50%);
+    margin: 0 auto;
     box-shadow: 0 0 10px 0 gray;
 
 }
 
 .search_input {
     height: 25px;
-    width: 300px;
+    width: 550px;
     border: 3px solid blue;
 }
 
 .search_btn {
     background-color: blue;
     color: white;
-    height: 25px;
-    width: 50px;
+    height: 30px;
+    width: 90px;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solir blue;
+}
+
+.search_btn:hover {
+    background-color: red;
+    border: 1px solid red;
+    cursor: pointer;
+    
+    
 }
 
 .title {
-    color: blue;
+    color: white;
     font-size: 25px;
     font-weight: bold;
     text-align: center;
     padding-bottom: 15px;
 }
 .list {
-    margin-bottom: 30px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    row-gap: 10px;
-    column-gap: 10px;
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: stretch;
+    align-items: baseline;
 
 }
 
 .list_items {
-   //width: 200px;
-   //height: 350px;
-    border: 1px solid gray;
+    border: 1px solid rgb(161, 144, 144);
     list-style: none;
     text-align: center;
     padding: 20px 5px 40px 5px ;
+    margin-bottom: 20px;
     margin-left: 20px;
     margin-right: 20px;
     font-weight: bold ;
-    color: rgb(161, 144, 144)
+    color: rgb(161, 144, 144); 
+    box-shadow: 0 0 5px 0 gray; 
+    background-color: white;
+    width: fit-content;
+    height: fit-content;
+    
 }
 
 .image {
+    width: 200px;
     height: 200px;
     padding-bottom: 10px;
 }
 
-.list_fav {
-    background-color: aqua;
-    margin-bottom: 50px;
+.ul_fav-list {
+    display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: stretch;
+        align-items: baseline;
+        width: 70%;
+
     
+}
+.list_fav {
+    background-color: rgb(247, 223, 190);
+    margin-bottom: 50px;   
 }
